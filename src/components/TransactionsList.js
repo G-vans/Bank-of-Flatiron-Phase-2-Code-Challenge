@@ -1,11 +1,15 @@
 import React from "react";
 import Transaction from "./Transaction";
 
-function TransactionsList() {
+function TransactionsList({transactions}) {
+  
   return (
     <table className="ui celled striped padded table">
       <tbody>
         <tr>
+        <th>
+            <h3 className="ui center aligned header">#Ref</h3>
+          </th>
           <th>
             <h3 className="ui center aligned header">Date</h3>
           </th>
@@ -20,6 +24,15 @@ function TransactionsList() {
           </th>
         </tr>
         {/* render a list of <Transaction> components here */}
+        {transactions.map(transaction=>{
+          return <Transaction
+            date={transaction.date}
+            description={transaction.description}
+            category={transaction.category}
+            amount={transaction.amount}
+            key={transaction.id}
+            />
+        })}
       </tbody>
     </table>
   );
