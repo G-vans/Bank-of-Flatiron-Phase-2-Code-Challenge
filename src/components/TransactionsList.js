@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Transaction from './Transaction';
 
-function TransactionsList() {
+function TransactionsList({ transactions, handleDeleteTransaction, handleAddForm}) {
 
-  //fetch data
-  //GET request
-  const [transactions, listTransactions] = useState([]);
-  useEffect(() => {
-    fetch('http://localhost:8001/transactions')
-      .then((response) => response.json())
-      .then((transacs) => listTransactions(transacs))
-      .catch((err) => console.log(err));
-  }, []);
-
+  const deleteTransaction = async (transId) => {
+		console.log(transId);
+		try {
+			const res = await fetch("http://localhost:8001/transactions/" + transId, {
+				method: "DELETE",
+			});
+			handleDeleteTransaction(transId);
+		} catch (error) {
+			console.log(error);
+		}
+	};
   
-
-
+ 
+  
   return (
-    <table className='ui celled striped padded table'>
+    <table onAddItem= {handleAddForm} className='ui celled striped padded table'>
       <tbody>
         <tr>
         {/* <th>
@@ -35,16 +36,15 @@ function TransactionsList() {
           <th>
             <h3 className='ui center aligned header'>Amount</h3>
           </th>
+          <th><h3 className='ui center aligned header'>Delete</h3></th>
         </tr>
         {/* render a list of <Transaction> components here */}
-        {transactions.map((transaction) => {
+        {transactions.map((transaction, idx) => {
           return (
             <Transaction
-            date={transaction.date}
-            description={transaction.description}
-            category={transaction.category}
-            amount={transaction.amount}
             key={transaction.id}
+						transaction={transaction}
+						deleteTransaction={deleteTransaction}
             />
           );
         })}
