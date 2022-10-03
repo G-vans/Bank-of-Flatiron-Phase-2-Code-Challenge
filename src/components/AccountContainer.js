@@ -1,31 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import AddTransactionForm from './AddTransactionForm';
-import TransactionsList from './TransactionsList';
-import Search from './Search';
+import React, { useState, useEffect } from "react";
+import TransactionsList from "./TransactionsList";
+import Search from "./Search";
+import AddTransactionForm from "./AddTransactionForm";
 
-
-function AccountContainer({ handleOnSearch }) {
-  const [transacs, listTransaction] = useState([]);
+function AccountContainer({handleDeleteTransaction}) {
+	 //fetch data
+  //GET request
+  const [transactions, listTransactions] = useState([]);
   useEffect(() => {
     fetch('http://localhost:8001/transactions')
       .then((response) => response.json())
-      .then((transacs) => listTransaction(transacs));
+      .then((transacs) => listTransactions(transacs))
+      .catch((err) => console.log(err));
   }, []);
 
-
-  function handleOnSearch(search) {
-    listTransaction(transactions => transactions.filter(transaction => transaction.description.includes(search)))
+  function handleAddForm(newForm) {
+    listTransactions([...transactions, newForm]);
   }
 
-  return (
-    <div>
-      <Search onSearch={handleOnSearch} />
-      <AddTransactionForm />
-      <TransactionsList />
-      
+  
 
-    </div>
-  );
+  function handleSearch(e) {
+    listTransactions((transactions) => {
+      return transactions.filter((transaction) => {
+        return transaction.description.toLowerCase().includes(e.target.value.toLowerCase());
+      });
+    });
+  }
+	return (
+		<div>
+			<Search handleSearch={handleSearch} />
+			<AddTransactionForm
+				handleAddTransaction={handleAddForm}
+				transactions={transactions}
+			/>
+			<TransactionsList
+				transactions={transactions}
+				
+			/>
+		</div>
+	);
 }
 
 export default AccountContainer;
