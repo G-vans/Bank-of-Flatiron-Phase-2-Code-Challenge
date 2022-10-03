@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/github.io/Bank-of-Flatiron-Phase-2-Code-Challenge/precache-manifest.51b7da753f1412c990cf0c364e2af165.js"
+  "/Bank-of-Flatiron-Phase-2-Code-Challenge/precache-manifest.7261344941b713ebf51c221acb9d7031.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/github.io/Bank-of-Flatiron-Phase-2-Code-Challenge/index.html", {
+workbox.routing.registerNavigationRoute("/Bank-of-Flatiron-Phase-2-Code-Challenge/index.html", {
   
   blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });
